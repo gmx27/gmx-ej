@@ -83,9 +83,9 @@ export default {
       //要向网页中显示的数据
     data(){
         return{
-            title:"添加产品信息",
+            title:"录入产品信息",
             visible:false,
-            products:[],
+            columns:[],
             form:{
                 type:"product"
             }
@@ -126,26 +126,32 @@ export default {
             })
             
         },
-        toDeleteHandler(id){
-        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
+         toDeleteHandler(id){
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        let url="http://localhost:6677/product/deleteById?id="+id;
+        request.get(url).then((response)=>{
+          //刷新数据
+          this.loadData();
+          //提示结果
           this.$message({
-            type: 'success',
-            message: '删除成功!'+id
-          });
-        })
-        },
-        toUpdateHandler(row){
-            this.title="修改栏目信息"
-            this.visible=true;
-        },
-        toAddHandler(){
-            this.title="录入栏目信息"
-            this.visible=true;
-        },
+          type: 'success',
+          message: response.message
+        });
+        })       
+      })     
+    },
+      toUpdateHandler(row){
+      //模态框表单中显示出当前行的信息
+      this.form=row;
+      this.visible = true;
+    },
+    closeModalHandler(){
+      this.visible = false;
+    },
         closeModalHandler(){
             this.visible=false;
         }
