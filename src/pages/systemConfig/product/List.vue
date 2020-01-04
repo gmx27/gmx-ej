@@ -149,12 +149,15 @@ export default {
       this.form=row;
       this.visible = true;
     },
+     toAddHandler(){
+      this.form={
+        type:"product"
+      }
+      this.visible = true;
+     },
     closeModalHandler(){
       this.visible = false;
-    },
-        closeModalHandler(){
-            this.visible=false;
-        }
+     }
     }
 }
 </script>

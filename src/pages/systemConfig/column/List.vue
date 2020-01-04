@@ -47,7 +47,7 @@ export default {
       //要向网页中显示的数据
     data(){
         return{
-            title:"录入员工信息",
+            title:"录入栏目信息",
             visible:false,
             columns:[],
             form:{
@@ -113,6 +113,12 @@ export default {
       this.form=row;
       this.visible = true;
     },
+     toAddHandler(){
+      this.form={
+        type:"column"
+      }
+      this.visible = true;
+     },
     closeModalHandler(){
       this.visible = false;
     },
