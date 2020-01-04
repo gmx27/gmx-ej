@@ -33,7 +33,7 @@
       :title="title"
       :visible.sync="visible"
       width="60%">
-      <!-- 测试：{{form }} -->
+      测试：{{form }}
       <el-form :model="form" label-width="80px">
         <el-form-item label="用户名">
           <el-input v-model="form.username"></el-input>
@@ -138,12 +138,13 @@ export default {
         })
         },
         toUpdateHandler(row){
+            this.form=row;
             this.title="修改员工信息"
             this.visible=true;
         },
         toAddHandler(){
             this.form={
-                type:"employee"
+                type:"waiter"
             }
             this.title="录入员工信息"
             this.visible=true;
