@@ -30,7 +30,7 @@
        <el-form :model="form" label-with="80px">
             <!-- <el-form-item label="地址编号">
                <el-input v-model="form.id"/>
-           </el-form-item> -->
+            </el-form-item> -->
             <el-form-item label="省份">
                <el-input v-model="form.province"/>
             </el-form-item>
@@ -47,13 +47,13 @@
                <el-input v-model="form.telephone"/>
             </el-form-item>
             <el-form-item label="顾客编号">
-                    <el-select v-model="form.customerId" placeholder="请选择">
-                        <el-option v-for="item in customerIdArr"
-                            :key="item.id" :label="item.realname"
-                            :value="item.id">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
+                <el-select v-model="form.customerId" placeholder="请选择">
+                   <el-option v-for="item in customerIdArr"
+                        :key="item.id" :label="item.realname"
+                        :value="item.id">
+                   </el-option>
+                </el-select>
+             </el-form-item>
        </el-form>
        <span slot="footer" class="dialog-footer">
        <el-button size="small" @click="closeModalHandler">取 消</el-button>
@@ -81,14 +81,14 @@ export default {
         }
     },
     // 录入栏目信息
-        toAddHandler(){
-            let url = "http://localhost:6677/customer/findAll"
-            request.get(url).then((response)=>{
-                this.options = response.data;
-            })
+    toAddHandler(){
+        let url = "http://localhost:6677/customer/findAll"
+        request.get(url).then((response)=>{
+            this.options = response.data;
+        })
             this.title="添加产品信息",
             this.visible=true;
-        },
+    },
     created(){
         this.loadData()
         this.findCustomerId()
@@ -103,7 +103,7 @@ export default {
                 this.customerIdArr = response.data;
             })
         },
-         submitHandler(){
+        submitHandler(){
             let url = "http://localhost:6677/address/saveOrUpdate";
             request({
                 url,
@@ -134,22 +134,21 @@ export default {
             
         },
          toDeleteHandler(id){
-      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        let url="http://localhost:6677/address/deleteById?id="+id;
-        request.get(url).then((response)=>{
-          //刷新数据
-          this.loadData();
-          //提示结果
-          this.$message({
-          type: 'success',
-          message: response.message
-        });
-        })       
-      })     
+             this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+             confirmButtonText: '确定',
+             cancelButtonText: '取消',
+             type: 'warning'}).then(() => {
+                 let url="http://localhost:6677/address/deleteById?id="+id;
+            request.get(url).then((response)=>{
+                 //刷新数据
+                 this.loadData();
+                 //提示结果
+                 this.$message({
+                     type: 'success',
+                      message: response.message
+                 });
+            })       
+        })     
     },
       toUpdateHandler(row){
       //模态框表单中显示出当前行的信息
