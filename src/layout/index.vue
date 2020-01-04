@@ -3,10 +3,14 @@
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar class="sidebar-container" />
     <div class="main-container">
+       <!-- 右侧导航 -->
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
       </div>
+    <!-- 右侧内容 -->
+      <div style="padding:1em">
       <app-main />
+      </div>
     </div>
   </div>
 </template>
