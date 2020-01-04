@@ -34,7 +34,7 @@
             </el-form-item>
             <el-form-item label="所属栏目">
                     <el-select v-model="form.categoryId" placeholder="请选择">
-                        <el-option v-for="item in options"
+                        <el-option v-for="item in categoryIdArr"
                             :key="item.value" :label="item.name"
                             :value="item.parentId">
                         </el-option>
@@ -45,7 +45,7 @@
                 type="textarea"
                 :rows="2"
                 placeholder="请输入内容"
-                v-model="description">
+                v-model="form.description">
                 </el-input>
             </el-form-item>
              <el-form-item label="产品主图">
@@ -85,14 +85,24 @@ export default {
             products:[],
             form:{
                 type:"product"
-            }
+            },
+            categoryIdArr:[]
         }
     },
     created(){
         this.loadData()
+        this.findCategoryId()
     },
     //存放网页中需要调用的方法
     methods:{
+       // 查询顾客id
+        findCategoryId(){
+            let url="http://localhost:6677/category/findAll";
+            request.get(url).then((response)=>{
+                //箭头函数中的this指向外部函数中的this
+                this.categoryIdArr = response.data;
+            })
+        },
         submitHandler(){
             let url = "http://localhost:6677/product/saveOrUpdate";
       request({
@@ -147,7 +157,7 @@ export default {
       this.visible = true;
     },
       toAddHandler(){
-            let url = "http://localhost:6677/category/findAll"
+            let url = "http://localhost:6677/product/findAll"
             request.get(url).then((response)=>{
                 this.options = response.data;
             })
