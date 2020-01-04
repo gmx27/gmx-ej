@@ -1,7 +1,6 @@
 <template>
     <div>
-        <el-button type="primary" size="small" @click="toAddHandler">添加</el-button>
-        <el-button type="danger" size="small">批量删除</el-button>
+     
         <!--表格开始-->
         <el-table :data="orders">
             <el-table-column prop="id" label="编号"></el-table-column>
@@ -12,8 +11,7 @@
             <el-table-column prop="addressId" label="地址编号"></el-table-column>
             <el-table-column fixed="right" label="操作">
                 <template v-slot="slot"><!--获取当前行所有信息-->
-                    <a href="" @click.prevent="toDeleteHandler(slot.row.id)">删除 </a>
-                    <a href="" @click.prevent="toUpdateHandler(slot.row)"> 修改</a>
+                    <a href="" @click.prevent="toUpdateHandler(slot.row)"> 详情</a>
                     <!--prevent阻止页面跳转（默认行为）-->
                 </template>
             </el-table-column>
@@ -72,25 +70,7 @@ export default {
     //存放网页中需要调用的方法
     methods:{
         submitHandler(){
-            let url = "http://localhost:6677/order/saveOrUpdate";
-      request({
-        url,
-        method:"POST",
-        headers:{
-          "Content-Type":"application/x-www-form-urlencoded"
-        },
-        data:querystring.stringify(this.form)
-      }).then((response)=>{
-        // 模态框关闭
-        this.closeModalHandler();
-        // 刷新
-        this.loadData();
-        // 提示消息
-        this.$message({
-          type:"success",
-          message:response.message
-        })
-      })
+        this.closeModalHandler()
         },
         loadData(){
            // this-->vue实例,通过vue实例访问该实例中的数据
@@ -123,12 +103,6 @@ export default {
       this.form=row;
       this.visible = true;
     },
-     toAddHandler(){
-      this.form={
-        type:"order"
-      }
-      this.visible = true;
-     },
         closeModalHandler(){
             this.visible=false;
         }
