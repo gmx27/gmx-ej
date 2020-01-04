@@ -119,9 +119,6 @@ export default {
       }
       this.visible = true;
      },
-    closeModalHandler(){
-      this.visible = false;
-    },
         closeModalHandler(){
             this.visible=false;
         }

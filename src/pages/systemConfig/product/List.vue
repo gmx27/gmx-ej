@@ -85,7 +85,7 @@ export default {
         return{
             title:"录入产品信息",
             visible:false,
-            columns:[],
+            products:[],
             form:{
                 type:"product"
             }

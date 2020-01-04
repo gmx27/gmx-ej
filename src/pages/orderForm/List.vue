@@ -34,7 +34,7 @@
                <el-input v-model="form.total"/>
            </el-form-item>
              <el-form-item label="状态">
-         <el-radio-group v-model="radio">
+         <el-radio-group v-model="form.status">
           <el-radio :label="已完成">已完成</el-radio>
           <el-radio :label="未完成">未完成</el-radio>
         </el-radio-group>
@@ -67,7 +67,7 @@ export default {
         return{
             title:"录入栏目信息",
             visible:false,
-            columns:[],
+            orders:[],
             form:{
                 type:"order"
             }
