@@ -4,7 +4,7 @@
     <!-- 按钮 -->
     <div>
     <el-button type="primary" size="small" @click="toAddHandler">添加</el-button> 
-    <el-button type="danger" size="small" >批量删除</el-button>
+    <el-button type="danger" size="small">批量删除</el-button>
     </div>
     <!-- /按钮 -->
     <!-- 表格 -->
@@ -45,9 +45,9 @@
           <el-input v-model="form.realname"></el-input>
         </el-form-item>
         <el-form-item label="性别">
-         <el-radio-group v-model="radio">
-          <el-radio :label="男">男</el-radio>
-          <el-radio :label="女">女</el-radio>
+         <el-radio-group v-model="form.gender">
+          <el-radio label="男">男</el-radio>
+          <el-radio label="女">女</el-radio>
         </el-radio-group>
         </el-form-item>
         <el-form-item label="手机号">
@@ -62,7 +62,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button size="small" @click="closeModalHandler">取 消</el-button>
-        <el-button size="small" type="primary" @click="closeModalHandler">确 定</el-button>
+        <el-button size="small" type="primary" @click="submitHandler">确 定</el-button>
       </span>
     </el-dialog>
     <!-- /模态框 -->
@@ -135,7 +135,7 @@ export default {
                 message:response.message
             });
             });
-        })
+          })
         },
         toUpdateHandler(row){
             this.form=row;

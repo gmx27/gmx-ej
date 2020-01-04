@@ -17,7 +17,7 @@
         <template v-slot="slot">
           <!-- slot用于获取当前行数据 -->
           <a href="" @click.prevent="toDeleteHandler(slot.row.id)">删除</a>
-          <a href="" @click.prevent="toUpdateHandler(slot.row)">修改</a>
+          <a href="" @click.prevent="toUpdateHandler">修改</a>
         </template>
       </el-table-column>
     </el-table>
@@ -47,7 +47,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button size="small" @click="closeModalHandler">取 消</el-button>
-        <el-button size="small" type="primary" @click="closeModalHandler">确 定</el-button>
+        <el-button size="small" type="primary" @click="submitHandler">确 定</el-button>
       </span>
     </el-dialog>
     <!-- /模态框 -->
@@ -122,15 +122,11 @@ export default {
             });
         })
         },
-        toUpdateHandler(row){
-            this.form=row;
+        toUpdateHandler(){
             this.title="修改评论信息"
             this.visible=true;
         },
         toAddHandler(){
-            this.form={
-                type:"comment"
-            }
             this.title="录入评论信息"
             this.visible=true;
         },
