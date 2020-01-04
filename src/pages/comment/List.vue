@@ -17,7 +17,7 @@
         <template v-slot="slot">
           <!-- slot用于获取当前行数据 -->
           <a href="" @click.prevent="toDeleteHandler(slot.row.id)">删除</a>
-          <a href="" @click.prevent="toUpdateHandler">修改</a>
+          <a href="" @click.prevent="toUpdateHandler(slot.row)">修改</a>
         </template>
       </el-table-column>
     </el-table>
@@ -30,7 +30,7 @@
       :title="title"
       :visible.sync="visible"
       width="60%">
-      {{form }}
+      {{form}}
       <el-form :model="form" label-width="80px">
         <el-form-item label="编号">
           <el-input v-model="form.id"></el-input>
@@ -77,24 +77,24 @@ export default {
     methods:{
       submitHandler(){
         let url = "http://localhost:6677/comment/saveOrUpdate";
-      request({
-        url,
-        method:"POST",
-        headers:{
-          "Content-Type":"application/x-www-form-urlencoded"
-        },
-        data:querystring.stringify(this.form)
-      }).then((response)=>{
-        // 模态框关闭
-        this.closeModalHandler();
-        // 刷新
-        this.loadData();
-        // 提示消息
-        this.$message({
-          type:"success",
-          message:response.message
+        request({
+          url,
+          method:"POST",
+          headers:{
+            "Content-Type":"application/x-www-form-urlencoded"
+          },
+          data:querystring.stringify(this.form)
+        }).then((response)=>{
+          // 模态框关闭
+          this.closeModalHandler();
+          // 刷新
+          this.loadData();
+          // 提示消息
+          this.$message({
+            type:"success",
+            message:response.message
+          })
         })
-      })
       },
       loadData(){
             // this-->vue实例,通过vue实例访问该实例中的数据
@@ -122,11 +122,15 @@ export default {
             });
         })
         },
-        toUpdateHandler(){
+        toUpdateHandler(row){
+            this.form=row;
             this.title="修改评论信息"
             this.visible=true;
         },
         toAddHandler(){
+            this.form={
+                  type:"comment"
+              }
             this.title="录入评论信息"
             this.visible=true;
         },
