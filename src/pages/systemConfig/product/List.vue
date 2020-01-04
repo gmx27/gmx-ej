@@ -159,7 +159,7 @@ export default {
       toAddHandler(){
             let url = "http://localhost:6677/product/findAll"
             request.get(url).then((response)=>{
-                this.options = response.data;
+                this.categoryIdArr = response.data;
             })
             this.title="添加产品信息",
             this.visible=true;
