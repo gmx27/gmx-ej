@@ -28,11 +28,11 @@
         width="60%">
         ---{{form}}
        <el-form :model="form" label-with="80px">
-            <el-form-item label="地址编号">
+            <!-- <el-form-item label="地址编号">
                <el-input v-model="form.id"/>
-           </el-form-item>
+           </el-form-item> -->
             <el-form-item label="省份">
-               <el-input v-model="form.provincr"/>
+               <el-input v-model="form.province"/>
             </el-form-item>
             <el-form-item label="市">
                <el-input v-model="form.city"/>
@@ -47,8 +47,13 @@
                <el-input v-model="form.telephone"/>
             </el-form-item>
             <el-form-item label="顾客编号">
-               <el-input v-model="form.customerId"/>
-            </el-form-item>
+                    <el-select v-model="form.customerId" placeholder="请选择">
+                        <el-option v-for="item in customerIdArr"
+                            :key="item.id" :label="item.realname"
+                            :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
        </el-form>
        <span slot="footer" class="dialog-footer">
        <el-button size="small" @click="closeModalHandler">取 消</el-button>
@@ -71,34 +76,53 @@ export default {
             columns:[],
             form:{
                 type:"category"
-            }
+            },
+            customerIdArr:[]
         }
     },
+    // 录入栏目信息
+        toAddHandler(){
+            let url = "http://localhost:6677/customer/findAll"
+            request.get(url).then((response)=>{
+                this.options = response.data;
+            })
+            this.title="添加产品信息",
+            this.visible=true;
+        },
     created(){
         this.loadData()
+        this.findCustomerId()
     },
     //存放网页中需要调用的方法
     methods:{
-         submitHandler(){
-        let url = "http://localhost:6677/address/saveOrUpdate";
-      request({
-        url,
-        method:"POST",
-        headers:{
-          "Content-Type":"application/x-www-form-urlencoded"
+        // 查询顾客id
+        findCustomerId(){
+            let url="http://localhost:6677/customer/findAll";
+            request.get(url).then((response)=>{
+                //箭头函数中的this指向外部函数中的this
+                this.customerIdArr = response.data;
+            })
         },
-        data:querystring.stringify(this.form)
-      }).then((response)=>{
-        // 模态框关闭
-        this.closeModalHandler();
-        // 刷新
-        this.loadData();
-        // 提示消息
-        this.$message({
-          type:"success",
-          message:response.message
-        })
-      })
+         submitHandler(){
+            let url = "http://localhost:6677/address/saveOrUpdate";
+            request({
+                url,
+                method:"POST",
+                headers:{
+                "Content-Type":"application/x-www-form-urlencoded"
+                },
+                data:querystring.stringify(this.form)
+            }).then((response)=>{
+                // 模态框关闭
+                this.closeModalHandler();
+                // 刷新
+                this.loadData();
+                // 提示消息
+                this.$message({
+                type:"success",
+                message:response.message
+                })
+            })
       },
         loadData(){
            // this-->vue实例,通过vue实例访问该实例中的数据
