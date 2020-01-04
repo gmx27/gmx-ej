@@ -22,7 +22,6 @@
     <!-- /分页结束 -->
     <!-- 模态框 -->
     <el-dialog
-      :title="title"
       :visible.sync="visible"
       width="60%">
         ---{{form}}
@@ -55,6 +54,22 @@
 import request from '@/utils/request'
 import querystring from 'querystring'
 export default {
+   // 用于存放要向网页中显示的数据
+  data(){
+    return {
+      title:"录入顾客信息",
+      visible:false,
+      customers:[],
+      form:{
+        type:"customer"
+      }
+    }
+  },
+  created(){
+    // this为当前vue实例对象
+    // vue实例创建完毕 
+    this.loadData()
+  },
   // 用于存放网页中需要调用的方法
   methods:{
     loadData(){
@@ -110,33 +125,18 @@ export default {
       })     
     },
     toUpdateHandler(){
-      this.title="修改员工信息"
+      this.title="修改顾客信息"
       this.visible = true;
     },
     closeModalHandler(){
-      this.title="录入员工信息"
+      this.title="录入顾客信息"
       this.visible = false;
     },
     toAddHandler(){
       this.visible = true;
     }
   },
-  // 用于存放要向网页中显示的数据
-  data(){
-    return {
-      visible:false,
-      customers:[],
-      form:{
-        type:"customer"
-      }
-    }
-  },
-  created(){
-    // this为当前vue实例对象
-    // vue实例创建完毕 
-    this.loadData()
-
-  }
+ 
 }
 </script>
 
