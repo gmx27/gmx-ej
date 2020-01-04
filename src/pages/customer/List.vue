@@ -97,12 +97,17 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$message({
+        let url="http://localhost:6677/customer/deleteById?id="+id;
+        request.get(url).then((response)=>{
+          //刷新数据
+          this.loadData();
+          //提示结果
+          this.$message({
           type: 'success',
-          message: '删除成功!'
+          message: response.message
         });
-      })
-      
+        })       
+      })     
     },
     toUpdateHandler(){
       this.visible = true;

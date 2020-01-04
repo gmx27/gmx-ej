@@ -11,7 +11,7 @@
             <el-table-column prop="area" label="县、区"></el-table-column>
             <el-table-column prop="address" label="路"></el-table-column>
             <el-table-column prop="telephone" label="联系方式"></el-table-column>
-            <el-table-column prop="customer_id" label="顾客编号"></el-table-column>
+            <el-table-column prop="customerId" label="顾客编号"></el-table-column>
             <el-table-column fixed="right" label="操作">
                 <template v-slot="slot"><!--获取当前行所有信息-->
                     <a href="" @click.prevent="toDeleteHandler(slot.row.id)">删除 </a>
@@ -47,7 +47,7 @@
                <el-input v-model="form.telephone"/>
             </el-form-item>
             <el-form-item label="顾客编号">
-               <el-input v-model="form.customer_id"/>
+               <el-input v-model="form.customerId"/>
             </el-form-item>
        </el-form>
        <span slot="footer" class="dialog-footer">
@@ -79,8 +79,8 @@ export default {
     },
     //存放网页中需要调用的方法
     methods:{
-        submitHandler(){
-            let url = "http://localhost:6677/address/saveOrUpdate";
+         submitHandler(){
+        let url = "http://localhost:6677/address/saveOrUpdate";
       request({
         url,
         method:"POST",
@@ -99,7 +99,7 @@ export default {
           message:response.message
         })
       })
-        },
+      },
         loadData(){
            // this-->vue实例,通过vue实例访问该实例中的数据
             let url="http://localhost:6677/address/findAll";
@@ -135,9 +135,9 @@ export default {
     closeModalHandler(){
       this.visible = false;
     },
-        closeModalHandler(){
-            this.visible=false;
-        }
+        toAddHandler(){
+      this.visible = true;
+    }
     }
 }
 </script>
