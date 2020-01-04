@@ -4,7 +4,7 @@
     <!-- 按钮 -->
     <div>
     <el-button type="primary" size="small" @click="toAddHandler">添加</el-button> 
-    <el-button type="danger" size="small" @click="toDeleteHandler">批量删除</el-button>
+    <el-button type="danger" size="small" >批量删除</el-button>
     </div>
     <!-- /按钮 -->
     <!-- 表格 -->
