@@ -7,7 +7,6 @@
             <el-table-column prop="id" label="编号"></el-table-column>
             <el-table-column prop="orderTime" label="订单时间"></el-table-column>
             <el-table-column prop="total" label="数量"></el-table-column>
-            <el-table-column prop="status" label="状态"></el-table-column>
             <el-table-column prop="customerId" label="顾客编号"></el-table-column>
             <el-table-column prop="waiterId" label="员工编号"></el-table-column>
             <el-table-column prop="addressId" label="地址编号"></el-table-column>
@@ -33,12 +32,6 @@
             <el-form-item label="数量">
                <el-input v-model="form.total"/>
            </el-form-item>
-             <el-form-item label="状态">
-         <el-radio-group v-model="form.status">
-          <el-radio :label="已完成">已完成</el-radio>
-          <el-radio :label="未完成">未完成</el-radio>
-        </el-radio-group>
-        </el-form-item>
             <el-form-item label="顾客编号">
                <el-input v-model="form.customerId"/>
             </el-form-item>

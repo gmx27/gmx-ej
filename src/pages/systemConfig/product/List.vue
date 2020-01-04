@@ -8,7 +8,7 @@
             <el-table-column prop="name" label="产品名称"></el-table-column>
             <el-table-column prop="price" label="价格"></el-table-column>
             <el-table-column prop="description" label="描述"></el-table-column>
-            <el-table-column prop="categoryId" label="所属产品"></el-table-column>
+            <el-table-column prop="categoryId" label="所属栏目"></el-table-column>
             <el-table-column fixed="right" label="操作">
                 <template v-slot="slot"><!--获取当前行所有信息-->
                     <a href="" @click.prevent="toDeleteHandler(slot.row.id)">删除 </a>
@@ -32,16 +32,13 @@
             <el-form-item label="价格">
                <el-input v-model="form.price"/>
             </el-form-item>
-             <el-form-item label="所属栏目">
-              <el-dropdown v-model="form.categoryId">
-              <span class="el-dropdown-link">
-              请选择<i class="el-icon-arrow-down el-icon--right"></i>
-             </span>
-             <el-dropdown-menu slot="dropdown">
-             <el-dropdown-item>黄金糕</el-dropdown-item>
-             <el-dropdown-item>狮子头</el-dropdown-item>
-            </el-dropdown-menu>
-                </el-dropdown>
+            <el-form-item label="所属栏目">
+                    <el-select v-model="form.categoryId" placeholder="请选择">
+                        <el-option v-for="item in options"
+                            :key="item.value" :label="item.name"
+                            :value="item.parentId">
+                        </el-option>
+                    </el-select>
             </el-form-item>
              <el-form-item label="介绍">
                <el-input
@@ -149,12 +146,15 @@ export default {
       this.form=row;
       this.visible = true;
     },
-     toAddHandler(){
-      this.form={
-        type:"product"
-      }
-      this.visible = true;
-     },
+      toAddHandler(){
+            let url = "http://localhost:6677/category/findAll"
+            request.get(url).then((response)=>{
+                this.options = response.data;
+            })
+            this.title="添加产品信息",
+            this.visible=true;
+        },
+
     closeModalHandler(){
       this.visible = false;
      }
