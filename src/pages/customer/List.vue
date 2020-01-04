@@ -18,11 +18,11 @@
     </el-table>
     <!-- /表格结束 -->
     <!-- 分页开始 -->
-    <el-pagination layout="prev, pager, next" :total="50"></el-pagination>
+    <!-- <el-pagination layout="prev, pager, next" :total="50"></el-pagination> -->
     <!-- /分页结束 -->
     <!-- 模态框 -->
     <el-dialog
-      title="录入顾客信息"
+      :title="title"
       :visible.sync="visible"
       width="60%">
         ---{{form}}
@@ -110,9 +110,11 @@ export default {
       })     
     },
     toUpdateHandler(){
+      this.title="修改员工信息"
       this.visible = true;
     },
     closeModalHandler(){
+      this.title="录入员工信息"
       this.visible = false;
     },
     toAddHandler(){
