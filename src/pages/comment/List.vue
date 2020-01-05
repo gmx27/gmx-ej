@@ -4,7 +4,7 @@
     <!-- 按钮 -->
     <div>
     <el-button type="primary" size="small" @click="toAddHandler">添加</el-button> 
-    <el-button type="danger" size="small" >批量删除</el-button>
+    <el-button type="danger" size="small">批量删除</el-button>
     </div>
     <!-- /按钮 -->
     <!-- 表格 -->
@@ -30,23 +30,24 @@
       :title="title"
       :visible.sync="visible"
       width="60%">
+      <!-- 测试 -->
       {{form}}
-      <el-form :model="form" label-width="80px">
-        <el-form-item label="内容">
-          <el-input v-model="form.content"></el-input>
-        </el-form-item>
-        <el-form-item label="评论时间">
-          <el-input v-model="form.commentTime"></el-input>
-        </el-form-item>
-        <el-form-item label="订单号">
-            <el-select v-model="form.orderId" placeholder="请选择">
+       <el-form :model="form" label-width="80px">
+          <el-form-item label="评论时间">
+            <el-input v-model="form.commentTime"></el-input>
+          </el-form-item>
+          <el-form-item label="订单号">
+            <el-select v-model="form.orderId" clearable placeholder="请选择">
               <el-option
                 v-for="item in options"
-                :key="item.orderId"
-                :label="item.orderTime"
-                :value="item.orderId">
+                :key="item.id"
+                :label="item.id"
+                :value="item.id">
               </el-option>
             </el-select>
+          </el-form-item>
+        <el-form-item label="内容">
+            <el-input type="textarea" v-model="form.content"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -77,9 +78,18 @@ export default {
     },
     created(){
         this.loadData()
+        this.loadOrder()
     },
     //存放网页中需要调用的方法
     methods:{
+      loadOrder(){
+          // this-->vue实例,通过vue实例访问该实例中的数据
+          let url="http://localhost:6677/order/findAll";
+          request.get(url).then((response)=>{
+              //箭头函数中的this指向外部函数中的this
+              this.options=response.data;
+          })
+      },
       //this.form 对象 ---字符串--> 后台 {type:'comment',age:12}
       // json字符串 '{"type":"comment","age":12}'
       // request.post(url,this.form)
