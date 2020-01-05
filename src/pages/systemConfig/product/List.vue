@@ -9,6 +9,7 @@
             <el-table-column prop="price" label="价格"></el-table-column>
             <el-table-column prop="description" label="描述"></el-table-column>
             <el-table-column prop="categoryId" label="所属栏目"></el-table-column>
+            <el-table-column width="200px" prop="photo" label="图片"></el-table-column>
             <el-table-column fixed="right" label="操作">
                 <template v-slot="slot"><!--获取当前行所有信息-->
                     <a href="" @click.prevent="toDeleteHandler(slot.row.id)">删除 </a>
@@ -49,19 +50,15 @@
                 </el-input>
             </el-form-item>
              <el-form-item label="产品主图">
-               <el-upload
-                class="upload-demo"
-                action="https://jsonplaceholder.typicode.com/posts/"
-               :on-preview="handlePreview"
-               :on-remove="handleRemove"
-               :before-remove="beforeRemove"
-                multiple
-               :limit="3"
-               :on-exceed="handleExceed"
-               :file-list="fileList">
-               <el-button size="small" type="primary">点击上传</el-button>
-               <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-               </el-upload>
+                 <el-upload
+                  class="upload-demo"
+                  action="http://134.175.154.93:6677/file/upload"
+                  :file-list="fileList"
+                  :on-success="uploadSuccessHandler"
+                  list-type="picture">
+                  <el-button size="small" type="primary">点击上传</el-button>
+                  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                </el-upload>
             </el-form-item>
        </el-form>
        <span slot="footer" class="dialog-footer">
@@ -86,7 +83,8 @@ export default {
             form:{
                 type:"product"
             },
-            categoryIdArr:[]
+            categoryIdArr:[],
+            fileList:{}
         }
     },
     created(){
@@ -95,6 +93,12 @@ export default {
     },
     //存放网页中需要调用的方法
     methods:{
+      // 上传成功的事件处理函数
+      uploadSuccessHandler(response){
+        let photo="http://134.175.154.93:8888/group1/"
+        +response.data.id
+        this.form.photo=photo;
+      },
        // 查询顾客id
         findCategoryId(){
             let url="http://localhost:6677/category/findAll";
@@ -153,14 +157,13 @@ export default {
     },
       toUpdateHandler(row){
       //模态框表单中显示出当前行的信息
+      this.fileList=[];
       this.form=row;
       this.visible = true;
     },
       toAddHandler(){
-            let url = "http://localhost:6677/product/findAll"
-            request.get(url).then((response)=>{
-                this.categoryIdArr = response.data;
-            })
+            this.fileList=[];
+            this.form={}
             this.title="添加产品信息",
             this.visible=true;
         },
